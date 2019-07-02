@@ -23,11 +23,6 @@ public class NiversalNovelCrawler {
 
     private PrintWriter _writer;
 
-    /**
-     * 爬取过的url
-     */
-    private List<String> usedUrl = new ArrayList<String>();
-
     public NiversalNovelCrawler(CrawlerData data) {
         _data = data;
     }
