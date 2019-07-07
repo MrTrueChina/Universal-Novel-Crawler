@@ -39,8 +39,8 @@ public class NiversalNovelCrawler {
          * 创建写入流 
          * 写入正文
          */
-        createWriter();
-        crawlText();
+        createWriter(); //TODO：修改获取书名的方法，改为从书的主页获取
+        crawlText(); //TODO：修改获取一页的链接的方法，改为从书的主页获取所有章节的链接
         _writer.close();
 
         System.out.println("完成");
