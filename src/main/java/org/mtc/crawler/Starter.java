@@ -13,7 +13,7 @@ public class Starter {
 
 		CrawlerData data = new CrawlerData();
 
-		data.startUrl = "http://www.shushuwuxs.org/5_5032/94880.html";
+		data.startUrl = "http://www.shushuwuxs.org/5_5348/";
 		data.savePath = "D:\\Projects\\Spring-Tool-Suite-WorkSpace\\Universal-Novel-Crawler\\UniversalNovelCrawler\\save";
 		data.userAgent = "I,crawler"; // 这是个错误示范，但这个网站真的就是没有任何检测，有需要请自行百度如何查浏览器的用户代理
 		
