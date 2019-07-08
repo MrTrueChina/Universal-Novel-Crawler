@@ -1,16 +1,57 @@
 package org.mtc.crawler;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * 通用型爬虫的小说暂存类
  */
 public class UniversalNovelCrawlerNovelContainer {
-
-	/*
-	 * 	按顺序储存每一章链接和正文的Map
-	 * 	当前分发任务的计数
-	 * 	当前已经写入的任务的计数
-	 *  
-	 * 	领取章节任务的方法（同步）
-	 * 	提交章节任务的方法（同步）
+	/**
+	 * 链接 : 正文
 	 */
+	private List<Chapter> _chapters = new LinkedList<Chapter>();
+	/**
+	 * 准备爬取的章节的索引
+	 */
+	private int _readyToCrawlChapterIndex = 0;
+	/**
+	 * 准备写入txt的章节的索引
+	 */
+	private int _readyToWriteChapterIndex = 0;
+
+	public UniversalNovelCrawlerNovelContainer(List<String> urls) {
+		
+		for (String url : urls)
+			_chapters.add(new Chapter(url));
+	}
+
+	/**
+	 * 获取最靠前的未分配爬取的章节的网址
+	 * 
+	 * @return
+	 */
+	public synchronized String getChapterUrl() {
+
+		try {
+			return _chapters.get(_readyToCrawlChapterIndex).url;
+		} finally {
+			_readyToCrawlChapterIndex++;
+		}
+	}
+
+	/**
+	 * 获取最靠前的、已爬取的、未分配写入的，章节的正文
+	 * 
+	 * @return
+	 */
+	public synchronized String getChapterText() {
+
+		try {
+			return _chapters.get(_readyToWriteChapterIndex).text;
+		} finally {
+			_readyToWriteChapterIndex++;
+			_chapters.get(_readyToWriteChapterIndex).text = null;
+		}
+	}
 }
