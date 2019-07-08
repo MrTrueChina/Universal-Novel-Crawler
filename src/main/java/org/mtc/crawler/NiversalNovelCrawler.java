@@ -1,8 +1,11 @@
 package org.mtc.crawler;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +13,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
+import org.jsoup.select.Elements;
 
 /**
  * 通用型小说爬虫
@@ -31,40 +35,47 @@ public class NiversalNovelCrawler {
 	 */
 	private String _fileSeparator = File.separator;
 	/**
+	 * 网站域名
+	 */
+	private String _host;
+	/**
 	 * 把小说写进txt的写入流
 	 */
 	private PrintWriter _writer;
-	/**
-	 * 所有章节链接
-	 */
-	private List<String> _chapterPaths = new ArrayList<String>();
-	/**
-	 * 使用过的链接的列表
-	 */
-	private List<String> _usedPaths = new ArrayList<String>();
 
 	public NiversalNovelCrawler(CrawlerData data) {
 		_data = data;
 	}
 
 	/**
-	 * 
-	 * 
-	 * @param startUrl 要爬取的小说的第一页
-	 * @param savePath 要存储到的文件夹
+	 * 开始按照设置爬取
 	 * @throws IOException
 	 */
 	public void doCrawler() throws IOException {
 		/*
-		 *	创建写入流
+		 * 	获取并保存域名
+		 *	创建写入流（此时txt文件就有了）
 		 *	写入正文
 		 */
-		createDir();
+		getAndSetHost();
 		createWriter();
-//		crawlText(); // TODO：修改获取一页的链接的方法，改为从书的主页获取所有章节的链接
+		crawlText();
 		_writer.close();
 
 		System.out.println("完成，存储在 " + _data.savePath);
+	}
+
+	private void getAndSetHost() throws MalformedURLException {
+		_host = _data.agreement + new URL(_data.mainPageUrl).getHost();
+	}
+
+	private void createWriter() throws IOException {
+		/*
+		 * 	创建文件夹
+		 * 	创建写入流
+		 */
+		createDir();
+		doCreateWriter();
 	}
 
 	private void createDir() {
@@ -74,19 +85,16 @@ public class NiversalNovelCrawler {
 			dir.mkdirs();
 	}
 
-	private void createWriter() throws IOException {
+	private void doCreateWriter() throws IOException, FileNotFoundException {
 		/*
 		 *	抓取小说首页
 		 *	获取标题
 		 *	根据标题创建写入流
 		 */
-		Document startPage = Jsoup.connect(_data.startUrl).userAgent(_data.userAgent).get(); // 获取第一页整个页面
-		// Connection Jsoup.connect(String url)：建立和指定的页面的连接
-		// Connection Connection.userAgent(String
-		// userAgent)：存入用户代理信息，这个方法的巧妙之处在于他返回调用对象本身，这就使得他可以接在别的方法前面而不用另起一行
-		// Document Connection.get()：发送 GET 请求，返回网站返回的信息
 
-		String bookName = startPage.select(_data.bookNameQuery).text();
+		Document mainPage = getDocument(_data.mainPageUrl); // 获取首页整个页面
+
+		String bookName = mainPage.select(_data.bookNameQuery).text();
 		// Elements Document.select(String cssQuery)：选择所有指定的元素，参数和 CSS、JQuery 的选择器格式相同
 		// ".bookname h1" ：CSS 的选择器，意思是： "选择类名为 bookname 的 div 标签内部的 h1 标签"
 		// Elements.text()：获取所有文本数据，文本数据就是不是HTML标签的数据
@@ -94,75 +102,102 @@ public class NiversalNovelCrawler {
 		_writer = new PrintWriter(_data.savePath + _fileSeparator + bookName + ".txt");
 	}
 
+	private Document getDocument(String url) throws IOException {
+
+		return Jsoup.connect(url).userAgent(_data.userAgent).get();
+		// Connection Jsoup.connect(String url)：建立和指定的页面的连接
+		// Connection Connection.userAgent(String
+		// userAgent)：存入用户代理信息，这个方法的巧妙之处在于他返回调用对象本身，这就使得他可以接在别的方法前面而不用另起一行
+		// Document Connection.get()：发送 GET 请求，返回网站返回的信息
+	}
+
 	private void crawlText() throws IOException {
 		/*
-		 * 	while(这一页还能爬)
+		 * 	遍历所有章节链接
 		 * 	{
-		 *  	爬这一页的文本 获取下一页的url
-		 *  }
+		 * 		爬取章节
+		 * 	}
 		 */
-		Document currentPageDocument = Jsoup.connect(_data.startUrl).userAgent(_data.userAgent).get();
-
-		while (pageCanCrawl(currentPageDocument)) {
-			crawlAPageText(currentPageDocument);
-			currentPageDocument = getNextPageDocument(currentPageDocument);
-		}
+		for (String url : getChapterPaths())
+			crawlAChapter(url);
 	}
 
-	private boolean pageCanCrawl(Document pageDocument) {
-
-		if (pageDocument == null)
-			return false;
-
-		if (getTextElements(pageDocument) != null)
-			return true;
-
-		return false;
-	}
-
-	private void crawlAPageText(Document pageDocument) {
+	private List<String> getChapterPaths() throws IOException {
 		/*
-		 * 遍历(获取到目标文本的TextNode) 输出一个TextNode 输出页面结束的换行
+		 * 	抓取首页
+		 * 	筛选出所有有章节链接的元素
+		 * 	取出他们的属性并存入列表里
+		 * 	返回列表
 		 */
-		for (TextNode texeNode : getTextNodes(pageDocument))
-			writeATextNode(texeNode);
-		_writer.println(_lineSeparator + _lineSeparator); // TODO：这里建立在一页一章的前提上，如果一页多章则需要获取章节名的方法
+		List<String> urls = new ArrayList<String>();
+
+		Document mainPage = getDocument(_data.mainPageUrl);
+
+		Elements chapterElements = mainPage.select(_data.chapterQuery);
+
+		for (Element element : chapterElements)
+			urls.add(_host + element.attr("href"));
+
+		return urls;
 	}
 
-	private List<TextNode> getTextNodes(Document pageDocument) {
-		Element textElement = getTextElements(pageDocument);
-
-		if (textElement != null)
-			return textElement.textNodes();
-		// Element.textNodes()：获取元素内所有的文本节点，文本节点是封装文本的对象，文本则是HTML中不是标签的部分，也就是普通的文字
-
-		return new ArrayList<TextNode>();
+	private void crawlAChapter(String url) throws IOException {
+		/*
+		 * 	爬取章节标题
+		 * 	爬取章节正文
+		 * 	写入章节间的间隔
+		 */
+		crawlAChapterName(url);
+		crawlAChapterText(url);
+		writeChapterSeparator();
 	}
 
-	private Element getTextElements(Document pageDocument) {
-		return pageDocument.selectFirst("#content");
+	private void crawlAChapterName(String url) throws IOException {
+		/*
+		 * 	获取整个页面
+		 * 	查询到章节标题所在的元素
+		 * 	取出标题，写入
+		 */
+		Document page = getDocument(url);
+
+		Element chapterNameElement = page.selectFirst(_data.chapterNameQuery);
+
+		_writer.println(chapterNameElement.text() + _lineSeparator);
+		
+		System.out.println("开始爬取章节 " + chapterNameElement.text());
 	}
 
-	private void writeATextNode(TextNode textNode) {
+	private void crawlAChapterText(String url) throws IOException {
+		/*
+		 * 	获取整个页面
+		 * 	筛选出有正文的元素
+		 * 	从正文元素里取出正文
+		 * 	通过写入流写入
+		 */
+		Document chapterPage = getDocument(url);
 
-		String printString = textNode.text().replace("&nbsp;", " ") + _lineSeparator;
+		Element textElement = chapterPage.selectFirst(_data.textQuery);
 
-		_writer.print(printString);
+		List<TextNode> textNodes = textElement.textNodes();
+		
+		writeTextNodes(textNodes);
+	}
+	
+	private void writeTextNodes(List<TextNode> textNodes) {
+		
+		StringBuilder stringBuilder = new StringBuilder();
+		
+		for (TextNode textNode : textNodes) {
+			stringBuilder.append(textNode.text());
+			stringBuilder.append(_lineSeparator);
+		}
+		
+		_writer.print(stringBuilder.toString().replaceAll("&nbsp;", " "));
+		
 		_writer.flush();
 	}
 
-	private Document getNextPageDocument(Document pageDocument) {
-		String nextPageUrl = pageDocument.select("div.bottem2 a:matches(^下一章$)").attr("abs:href");
-		// div.boottem2 a:matches(^下一章$)
-		// "div.boottem2 a" ：这部分简单，选择类名是"boottem2"的div内部的a标签
-		// ":matches(regex)" ：伪选择器之一，用于【查找拥有和指定的正则表达式匹配的文本】的元素
-		// ":macthes(^下一章&)" ：匹配以"下一章"开头、以"下一章"结尾、内容是"下一章"的文本，也就是匹配"下一章"三个字
-
-		try {
-			return Jsoup.connect(nextPageUrl).userAgent(_data.userAgent).get();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return null;
-		}
+	private void writeChapterSeparator() {
+		_writer.print(_lineSeparator + _lineSeparator);
 	}
 }
