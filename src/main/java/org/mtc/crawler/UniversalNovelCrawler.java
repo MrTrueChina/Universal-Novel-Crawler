@@ -16,7 +16,7 @@ import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
 /**
- * 通用型小说爬虫
+ * 通用型小说爬虫中央控制类
  * 
  * @author MtC
  */
@@ -56,6 +56,7 @@ public class UniversalNovelCrawler {
 		 * 	获取并保存域名
 		 *	创建写入流（此时txt文件就有了）
 		 *	写入正文
+		 *	关闭流
 		 */
 		getAndSetHost();
 		createWriter();
