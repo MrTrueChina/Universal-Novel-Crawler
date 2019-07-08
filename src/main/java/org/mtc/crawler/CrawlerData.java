@@ -21,7 +21,11 @@ public class CrawlerData {
 	 * 用户代理，网站用来判断访问者使用平台、浏览器等信息的依据，网站通过这些信息发送页面给访问者。<br/>
 	 * 但不是所有网站都对这个信息做了精心设计和处理，有很多网站这个信息传什么都没影响。
 	 */
-	public String userAgent ="userAgent";
+	public String userAgent;
+	/**
+	 * 从小说首页查询小说标题的查询规则
+	 */
+	public String bookNameQuery;
 	/**
 	 * 【以毫秒为单位】爬取两页之间的最短间隔时间，用于应对有访问频率检测的网站
 	 */
