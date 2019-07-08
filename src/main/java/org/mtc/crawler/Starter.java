@@ -26,7 +26,7 @@ public class Starter {
 		data.minInterval = 0;
 		data.maxInterval = 1000;
 
-		NiversalNovelCrawler crawler = new NiversalNovelCrawler(data);
+		UniversalNovelCrawler crawler = new UniversalNovelCrawler(data);
 
 		try {
 			crawler.doCrawler();

@@ -20,7 +20,7 @@ import org.jsoup.select.Elements;
  * 
  * @author MtC
  */
-public class NiversalNovelCrawler {
+public class UniversalNovelCrawler {
 
 	/**
 	 * 爬虫设置
@@ -43,7 +43,7 @@ public class NiversalNovelCrawler {
 	 */
 	private PrintWriter _writer;
 
-	public NiversalNovelCrawler(CrawlerData data) {
+	public UniversalNovelCrawler(CrawlerData data) {
 		_data = data;
 	}
 
@@ -147,8 +147,12 @@ public class NiversalNovelCrawler {
 		 * 	爬取章节正文
 		 * 	写入章节间的间隔
 		 */
+		long lastTime=System.currentTimeMillis();
 		crawlAChapterName(url);
+		System.out.println("爬取章节标题，耗时 " + (System.currentTimeMillis()-lastTime) + " 毫秒");
+		lastTime=System.currentTimeMillis();
 		crawlAChapterText(url);
+		System.out.println("爬取章节正文，耗时 " + (System.currentTimeMillis()-lastTime) + " 毫秒");
 		writeChapterSeparator();
 	}
 
@@ -185,6 +189,8 @@ public class NiversalNovelCrawler {
 	
 	private void writeTextNodes(List<TextNode> textNodes) {
 		
+		long lastTime=System.currentTimeMillis();
+		
 		StringBuilder stringBuilder = new StringBuilder();
 		
 		for (TextNode textNode : textNodes) {
@@ -195,6 +201,8 @@ public class NiversalNovelCrawler {
 		_writer.print(stringBuilder.toString().replaceAll("&nbsp;", " "));
 		
 		_writer.flush();
+		
+		System.out.println("写入正文，耗时 " + (System.currentTimeMillis()-lastTime) + " 毫秒");
 	}
 
 	private void writeChapterSeparator() {
