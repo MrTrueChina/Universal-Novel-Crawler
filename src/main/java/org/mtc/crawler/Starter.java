@@ -25,8 +25,10 @@ public class Starter {
 
 		data.minInterval = 0;
 		data.maxInterval = 1000;
-		data.crawlerNumber = 10;
-		
+		data.timeOutMillisecond = 60000;
+		data.retryCount = 5;
+		data.crawlerNumber = 100;
+
 		try {
 			new CrawlerController(data).start();
 		} catch (IOException e) {

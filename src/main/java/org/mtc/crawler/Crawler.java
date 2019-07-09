@@ -1,7 +1,6 @@
 package org.mtc.crawler;
 
 import java.io.IOException;
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
@@ -60,8 +59,8 @@ public class Crawler extends Thread {
 		StringBuilder stringBuilder = new StringBuilder();
 
 		stringBuilder.append(crawlAChapterName(url));
-		stringBuilder.append(CHAPTER_SEPARATOR);
-		stringBuilder.append(CHAPTER_SEPARATOR);
+		stringBuilder.append(LINE_SEPARATOR);
+		stringBuilder.append(LINE_SEPARATOR);
 		stringBuilder.append(crawlAChapterText(url));
 		stringBuilder.append(CHAPTER_SEPARATOR);
 
@@ -74,7 +73,7 @@ public class Crawler extends Thread {
 		 * 	查询到章节标题所在的元素
 		 * 	取出标题，返回
 		 */
-		Document page = Jsoup.connect(url).userAgent(_data.userAgent).get();
+		Document page = Connector.connect(url,_data);
 
 		Element chapterNameElement = page.selectFirst(_data.chapterNameQuery);
 
@@ -88,7 +87,7 @@ public class Crawler extends Thread {
 		 * 	从正文元素里取出正文
 		 * 	返回
 		 */
-		Document chapterPage = Jsoup.connect(url).userAgent(_data.userAgent).get();
+		Document chapterPage = Connector.connect(url,_data);
 
 		Element textElement = chapterPage.selectFirst(_data.textQuery);
 

@@ -23,6 +23,14 @@ public class CrawlerData {
 	 */
 	public String userAgent;
 	/**
+	 * 超时时间，以毫秒为单位。当访问网址时间超过此时间仍没有获取到网页的相应时，视为连接超时
+	 */
+	public int timeOutMillisecond = 10000;
+	/**
+	 * 超时重连次数，如果发生连接超时，会尝试连接这里设置的次数
+	 */
+	public int retryCount=3;
+	/**
 	 * 协议
 	 */
 	public String agreement;
@@ -53,7 +61,7 @@ public class CrawlerData {
 	/**
 	 * 爬取线程数量
 	 */
-	public int crawlerNumber = 4;
+	public int crawlerNumber = 10;
 
 	/**
 	 * 【以毫秒为单位】根据最长最短间隔时间获取爬取下一页需要等待的间隔时间

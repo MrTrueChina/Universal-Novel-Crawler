@@ -6,7 +6,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -63,7 +62,7 @@ public class CrawlerController {
 		 */
 		List<String> urls = new ArrayList<String>();
 
-		Document mainPage = Jsoup.connect(_data.mainPageUrl).userAgent(_data.userAgent).get();
+		Document mainPage = Connector.connect(_data.mainPageUrl,_data);
 
 		Elements urlElements = mainPage.select(_data.chapterQuery);
 
