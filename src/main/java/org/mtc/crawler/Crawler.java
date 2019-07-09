@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 通用型爬虫负责爬取小说的类
  */
-public class UniversalNovelCrawlerGetter implements Runnable {
+public class Crawler implements Runnable {
 	
 	/*
 	 * 	设置
@@ -16,7 +16,7 @@ public class UniversalNovelCrawlerGetter implements Runnable {
 	 * 	向容器交任务的方法
 	 */
 
-	public UniversalNovelCrawlerGetter(CrawlerData data) {
+	public Crawler(CrawlerData data) {
 		
 	}
 

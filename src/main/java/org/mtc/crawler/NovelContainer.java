@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * 通用型爬虫的小说暂存类
  */
-public class UniversalNovelCrawlerNovelContainer {
+public class NovelContainer {
 	/**
 	 * 链接 : 正文
 	 */
@@ -20,7 +20,7 @@ public class UniversalNovelCrawlerNovelContainer {
 	 */
 	private int _readyToWriteChapterIndex = 0;
 
-	public UniversalNovelCrawlerNovelContainer(List<String> urls) {
+	public NovelContainer(List<String> urls) {
 		
 		for (String url : urls)
 			_chapters.add(new Chapter(url));
@@ -53,5 +53,14 @@ public class UniversalNovelCrawlerNovelContainer {
 			_readyToWriteChapterIndex++;
 			_chapters.get(_readyToWriteChapterIndex).text = null;
 		}
+	}
+	
+	/**
+	 * 将正文存入容器中指定url的位置
+	 * @param url
+	 * @param text
+	 */
+	public void setChapterText(String url,String text) {
+		
 	}
 }
