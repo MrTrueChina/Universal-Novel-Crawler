@@ -50,6 +50,10 @@ public class CrawlerData {
 	 * 【以毫秒为单位】爬取两页之间的最长间隔时间，用于应对有访问频率检测的网站
 	 */
 	public int maxInterval = 0;
+	/**
+	 * 爬取线程数量
+	 */
+	public int crawlerNumber = 4;
 
 	/**
 	 * 【以毫秒为单位】根据最长最短间隔时间获取爬取下一页需要等待的间隔时间

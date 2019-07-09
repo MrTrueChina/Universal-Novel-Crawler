@@ -14,4 +14,9 @@ public class Chapter {
 	public Chapter(String url) {
 		this.url = url;
 	}
+
+	@Override
+	public String toString() {
+		return "Chapter [url=" + url + ", text=" + text + "]";
+	}
 }
