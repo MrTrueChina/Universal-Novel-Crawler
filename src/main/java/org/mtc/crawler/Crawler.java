@@ -53,12 +53,15 @@ public class Crawler extends Thread {
 	private String crawlText(String url) throws IOException {
 		/*
 		 * 	爬取章节标题
+		 * 	加标题和正文之间的间隔
 		 * 	爬取章节正文
 		 * 	加章节间间隔
 		 */
 		StringBuilder stringBuilder = new StringBuilder();
 
 		stringBuilder.append(crawlAChapterName(url));
+		stringBuilder.append(CHAPTER_SEPARATOR);
+		stringBuilder.append(CHAPTER_SEPARATOR);
 		stringBuilder.append(crawlAChapterText(url));
 		stringBuilder.append(CHAPTER_SEPARATOR);
 
@@ -75,7 +78,7 @@ public class Crawler extends Thread {
 
 		Element chapterNameElement = page.selectFirst(_data.chapterNameQuery);
 
-		return chapterNameElement.text() + LINE_SEPARATOR + LINE_SEPARATOR;
+		return chapterNameElement.text();
 	}
 
 	private String crawlAChapterText(String url) throws IOException {
