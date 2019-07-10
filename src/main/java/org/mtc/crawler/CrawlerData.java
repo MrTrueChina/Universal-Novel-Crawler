@@ -29,11 +29,15 @@ public class CrawlerData {
 	/**
 	 * 超时重连次数，如果发生连接超时，会尝试连接这里设置的次数
 	 */
-	public int retryCount=3;
+	public int retryCount = 3;
 	/**
 	 * 协议
 	 */
 	public String agreement;
+	/**
+	 * url类型
+	 */
+	public UrlType urlType;
 	/**
 	 * 从小说首页查询书名的查询规则
 	 */

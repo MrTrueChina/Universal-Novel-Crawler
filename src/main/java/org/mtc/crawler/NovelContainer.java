@@ -28,13 +28,6 @@ public class NovelContainer {
 
 		for (String url : urls)
 			_chapters.add(new Chapter(url));
-
-		for (int i = 0; i < _chapters.size(); i++)
-			System.out.println(i + " " + _chapters.get(i));
-
-//		for (Chapter chapter : _chapters) {
-//			System.out.println(chapter);
-//		}
 	}
 
 	/**
