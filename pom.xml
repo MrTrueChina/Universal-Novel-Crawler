@@ -6,13 +6,24 @@
 	<artifactId>UniversalNovelCrawler</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<!-- Jsoup -->
-	<dependencies><!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+	<dependencies>
+
+		<!-- Jsoup，提供网络相关功能 -->
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>1.12.1</version>
 		</dependency>
+
+		<!-- jackson，提供JSON序列化和反序列化功能 -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
+			<version>2.9.9</version>
+		</dependency>
+
 	</dependencies>
 
 </project>

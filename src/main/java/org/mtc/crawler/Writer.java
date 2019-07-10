@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 /**
@@ -74,7 +73,7 @@ public class Writer extends Thread {
 		 *	根据标题创建写入流
 		 */
 
-		Document mainPage = Jsoup.connect(_data.mainPageUrl).userAgent(_data.userAgent).get(); // 获取首页整个页面
+		Document mainPage = Connector.connect(_data.mainPageUrl,_data); // 获取首页整个页面
 
 		String bookName = mainPage.select(_data.bookNameQuery).text();
 		// Elements Document.select(String cssQuery)：选择所有指定的元素，参数和 CSS、JQuery 的选择器格式相同
