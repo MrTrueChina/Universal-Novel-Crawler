@@ -46,7 +46,10 @@ public class CrawlerController {
 		 */
 		String host = getHost();
 		List<String> urls = getOriginChapterUrls();
-		return connectHostAndUrls(host, urls);
+
+		if (urls.size() > 0)
+			return connectHostAndUrls(host, urls);
+		throw new IllegalArgumentException("找不到章节url，请检查设置");
 	}
 
 	private String getHost() throws MalformedURLException {
@@ -62,7 +65,7 @@ public class CrawlerController {
 		 */
 		List<String> urls = new ArrayList<String>();
 
-		Document mainPage = Connector.connect(_data.mainPageUrl,_data);
+		Document mainPage = Connector.connect(_data.mainPageUrl, _data);
 
 		Elements urlElements = mainPage.select(_data.chapterQuery);
 
