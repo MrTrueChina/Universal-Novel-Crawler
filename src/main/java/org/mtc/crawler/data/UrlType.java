@@ -1,4 +1,4 @@
-package org.mtc.crawler;
+package org.mtc.crawler.data;
 
 /**
  * 	网站上的url的类型

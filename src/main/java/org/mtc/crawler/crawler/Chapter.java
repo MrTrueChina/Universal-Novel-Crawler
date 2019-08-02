@@ -1,4 +1,4 @@
-package org.mtc.crawler;
+package org.mtc.crawler.crawler;
 
 /**
  * 	章节网址和正文的封装类

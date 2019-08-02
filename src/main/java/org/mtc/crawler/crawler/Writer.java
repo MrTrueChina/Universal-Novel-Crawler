@@ -1,4 +1,4 @@
-package org.mtc.crawler;
+package org.mtc.crawler.crawler;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import org.jsoup.nodes.Document;
+import org.mtc.crawler.data.CrawlerData;
 
 /**
  * 	通用型爬虫负责将小说写入txt的类

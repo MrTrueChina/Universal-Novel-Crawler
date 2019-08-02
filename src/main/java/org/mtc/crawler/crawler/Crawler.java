@@ -1,9 +1,10 @@
-package org.mtc.crawler;
+package org.mtc.crawler.crawler;
 
 import java.io.IOException;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
+import org.mtc.crawler.data.CrawlerData;
 
 /**
  * 	负责爬取小说的类

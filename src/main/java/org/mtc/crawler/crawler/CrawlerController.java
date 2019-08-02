@@ -1,7 +1,10 @@
-package org.mtc.crawler;
+package org.mtc.crawler.crawler;
 
 import java.io.IOException;
 import java.util.List;
+
+import org.mtc.crawler.chapterurlgetter.SinglePageChapterUrlGetter;
+import org.mtc.crawler.data.CrawlerData;
 
 /**
  * 	爬取过程控制器
@@ -27,7 +30,7 @@ public class CrawlerController {
 		 * 	创建并启动爬取线程
 		 * 	创建并启动写线程
 		 */
-		List<String> urls = ChapterUrlGetter.getChapterUrls(_data);
+		List<String> urls = new SinglePageChapterUrlGetter(_data).getChapterUrls();
 		_container = new NovelContainer(urls);
 		startCrawlerThreads();
 		startWriteThread();

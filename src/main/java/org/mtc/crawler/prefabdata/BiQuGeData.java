@@ -1,7 +1,7 @@
-package org.mtc.crawler.data;
+package org.mtc.crawler.prefabdata;
 
-import org.mtc.crawler.CrawlerData;
-import org.mtc.crawler.UrlType;
+import org.mtc.crawler.data.CrawlerData;
+import org.mtc.crawler.data.UrlType;
 
 public class BiQuGeData extends CrawlerData {
 

@@ -2,7 +2,9 @@ package org.mtc.crawler;
 
 import java.io.IOException;
 
-import org.mtc.crawler.data.LongTengData;
+import org.mtc.crawler.crawler.CrawlerController;
+import org.mtc.crawler.data.CrawlerData;
+import org.mtc.crawler.prefabdata.LongTengData;
 
 /**
  * 	图形界面出来前的启动器

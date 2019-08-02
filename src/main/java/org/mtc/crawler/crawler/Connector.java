@@ -1,10 +1,11 @@
-package org.mtc.crawler;
+package org.mtc.crawler.crawler;
 
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.mtc.crawler.data.CrawlerData;
 
 /**
  * 	获取网页内容的工具类

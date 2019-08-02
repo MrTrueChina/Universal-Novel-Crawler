@@ -1,4 +1,4 @@
-package org.mtc.crawler;
+package org.mtc.crawler.crawler;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package org.mtc.crawler;
+package org.mtc.crawler.data;
 
 import java.util.Random;
 
@@ -21,7 +21,7 @@ public class CrawlerData {
 	 * 	用户代理，网站用来判断访问者使用平台、浏览器等信息的依据，网站通过这些信息发送页面给访问者。<br/>
 	 * 	但不是所有网站都对这个信息做了精心设计和处理，有很多网站这个信息传什么都没影响。
 	 */
-	public String userAgent;
+	public String userAgent = "userAgent";
 	/**
 	 * 	超时时间，以毫秒为单位。当访问网址时间超过此时间仍没有获取到网页的相应时，视为连接超时
 	 */
@@ -33,11 +33,19 @@ public class CrawlerData {
 	/**
 	 * 	协议
 	 */
-	public String agreement;
+	public String agreement = "http://";
+	/**
+	 * 	章节URL分页类型
+	 */
+	public ChapterUrlPageType chapterUrlPageType = ChapterUrlPageType.SINGLE_PAGE;
+	/**
+	 * 	章节URL页的下一页的按钮的查询规则
+	 */
+	public String nextChapterUrlPageQuery;
 	/**
 	 * 	url类型
 	 */
-	public UrlType urlType;
+	public UrlType urlType = UrlType.RELATIVE_TO_HOST;
 	/**
 	 * 	从小说首页查询书名的查询规则
 	 */
