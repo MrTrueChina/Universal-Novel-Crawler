@@ -6,12 +6,16 @@ import java.net.SocketTimeoutException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+/**
+ * 	获取网页的连接器类
+ */
 public class Connector {
 
 	private Connector() {
 	}
 
 	public static Document connect(String url, CrawlerData data) throws IOException {
+		
 		SocketTimeoutException exception = null;
 		
 		for (int i = 0; i < data.retryCount; i++) {

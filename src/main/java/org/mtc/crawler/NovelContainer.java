@@ -4,23 +4,23 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 通用型爬虫的小说暂存类
+ * 	通用型爬虫的小说暂存类
  */
 public class NovelContainer {
 	/**
-	 * 链接 : 正文
+	 * 	链接 : 正文
 	 */
 	private List<Chapter> _chapters = new LinkedList<Chapter>();
 	/**
-	 * 准备爬取的章节的索引
+	 * 	准备爬取的章节的索引
 	 */
 	private int _readyToCrawlChapterIndex = 0;
 	/**
-	 * 准备写入txt的章节的索引
+	 * 	准备写入txt的章节的索引
 	 */
 	private int _readyToWriteChapterIndex = 0;
 	/**
-	 * 是否处于写入状态，如果还有章节没有被写入线程取走则认为处于写入状态
+	 * 	是否处于写入状态，如果还有章节没有被写入线程取走则认为处于写入状态
 	 */
 	private boolean _writing = true;
 
@@ -31,9 +31,9 @@ public class NovelContainer {
 	}
 
 	/**
-	 * 获取最靠前的未分配爬取的章节的网址
+	 * 	获取最靠前的未分配爬取的章节的网址
 	 * 
-	 * @return
+	 * 	@return
 	 */
 	public synchronized String getChapterUrl() {
 
@@ -48,10 +48,10 @@ public class NovelContainer {
 	}
 
 	/**
-	 * 将正文存入容器中指定url的位置
+	 * 	将正文存入容器中指定url的位置
 	 * 
-	 * @param url
-	 * @param text
+	 * 	@param url
+	 * 	@param text
 	 */
 	public synchronized void setChapterText(String url, String text) {
 		if (url == null)
@@ -76,9 +76,9 @@ public class NovelContainer {
 	}
 
 	/**
-	 * 获取最靠前的、已爬取的、未分配写入的，章节的正文
+	 * 	获取最靠前的、已爬取的、未分配写入的，章节的正文
 	 * 
-	 * @return
+	 * 	@return
 	 */
 	public synchronized String getChapterText() {
 		if (_readyToWriteChapterIndex >= _chapters.size())
