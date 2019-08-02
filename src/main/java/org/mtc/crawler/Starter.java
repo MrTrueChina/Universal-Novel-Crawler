@@ -5,9 +5,9 @@ import java.io.IOException;
 import org.mtc.crawler.data.LongTengData;
 
 /**
- * 图形界面出来前的启动器
+ * 	图形界面出来前的启动器
  * 
- * @author MtC
+ * 	@author MtC
  *
  */
 public class Starter {

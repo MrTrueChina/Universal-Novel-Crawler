@@ -8,20 +8,20 @@ import java.io.PrintWriter;
 import org.jsoup.nodes.Document;
 
 /**
- * 通用型爬虫负责将小说写入txt的类
+ * 	通用型爬虫负责将小说写入txt的类
  */
 public class Writer extends Thread {
 
 	/**
-	 * 爬取设置
+	 * 	爬取设置
 	 */
 	private CrawlerData _data;
 	/**
-	 * 章节容器
+	 * 	章节容器
 	 */
 	private NovelContainer _container;
 	/**
-	 * 将正文输入到txt中的流
+	 * 	将正文输入到txt中的流
 	 */
 	private PrintWriter _writer;
 

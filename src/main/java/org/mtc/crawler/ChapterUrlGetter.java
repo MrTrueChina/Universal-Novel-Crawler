@@ -10,6 +10,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+/**
+ * 	从小说首页获取章节URL的类
+ */
 public class ChapterUrlGetter {
 
 	private CrawlerData _data;
