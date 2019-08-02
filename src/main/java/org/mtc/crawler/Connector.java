@@ -6,6 +6,9 @@ import java.net.SocketTimeoutException;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+/**
+ * 	获取网页内容的工具类
+ */
 public class Connector {
 
 	private Connector() {
