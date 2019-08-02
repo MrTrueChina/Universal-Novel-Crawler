@@ -5,9 +5,9 @@ import java.io.IOException;
 import org.mtc.crawler.data.LongTengData;
 
 /**
- * 图形界面出来前的启动器
+ * 	图形界面出来前的启动器
  * 
- * @author MtC
+ * 	@author MtC
  *
  */
 public class Starter {
@@ -15,7 +15,7 @@ public class Starter {
 
 		CrawlerData data = new LongTengData();
 
-		data.mainPageUrl = "http://www.longteng12345.com/book/76766.html";
+		data.mainPageUrl = "http://www.longteng12345.com/book/90425.html";
 		data.savePath = System.getProperty("user.dir") + "\\save";
 
 		data.minInterval = 0;

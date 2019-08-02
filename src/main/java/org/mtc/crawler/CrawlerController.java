@@ -3,6 +3,9 @@ package org.mtc.crawler;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * 	爬取与存储过程控制器
+ */
 public class CrawlerController {
 
 	private CrawlerData _data;

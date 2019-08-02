@@ -6,7 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
 
 /**
- * 通用型爬虫负责爬取小说的类
+ * 	通用型爬虫负责爬取小说的类
  */
 public class Crawler extends Thread {
 
