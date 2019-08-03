@@ -30,32 +30,35 @@ public class ConnectTest {
 		java.util.logging.Logger.getLogger("com.gargoylesoftware").setLevel(Level.OFF);
 		java.util.logging.Logger.getLogger("org.apache.http.client").setLevel(Level.OFF);
 
-		String url = "http://www.pixiv.net/novel/series/1014714?p=1";
+		String url = "https://www.pixiv.net/novel/show.php?id=10088957";
 		
 		System.out.println("开始模拟");
 
 		// HtmlUnit 模拟浏览器
 		WebClient webClient = new WebClient(BrowserVersion.CHROME);
-		
+
 		webClient.getOptions().setJavaScriptEnabled(true); // 启用JS解释器，默认为true
 		webClient.getOptions().setCssEnabled(false); // 禁用css支持
 		webClient.getOptions().setThrowExceptionOnScriptError(false); // js运行错误时，是否抛出异常
 		webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		webClient.getOptions().setTimeout(10000); // 设置连接超时时间
+	    webClient.getOptions().setRedirectEnabled(true); // 启动客户端重定向
 		webClient.getOptions().setProxyConfig(new ProxyConfig("127.0.0.1", 4580)); // 设置代理
-		
+
 		HtmlPage page = webClient.getPage(url);
 		
-		webClient.waitForBackgroundJavaScript(30000); // 等待js后台执行
+		System.out.println("已经连接到网页");
+
+		webClient.waitForBackgroundJavaScript(5000); // 等待js后台执行
 		webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-		
+
 		System.out.println("获取网页结束");
 
 		String pageAsXml = page.asXml(); // 将网页转为 xml
 
 		// Jsoup解析处理
 		Document doc = Jsoup.parse(pageAsXml, "https://bluetata.com/"); // 将 xml 字符串解析为 Document
-		
+
 		System.out.println(doc);
 	}
 }
